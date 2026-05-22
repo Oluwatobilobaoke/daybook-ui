@@ -1,0 +1,168 @@
+@import "tailwindcss";
+
+/*
+ * Daybook tokens. Mirrors DESIGN.md exactly. Tailwind v4 reads `@theme`
+ * blocks and emits matching utility classes (e.g. `bg-primary`,
+ * `text-accent-orange`, `text-7xl`, etc.).
+ */
+@theme {
+  /* Colors */
+  --color-primary: #2b2b2b;
+  --color-secondary: #f5ede1;
+  --color-accent-orange: #007ca6;
+  --color-accent-cyan: #77c6d4;
+  --color-accent-yellow: #dd9f61;
+  --color-accent-gray: #bac7cb;
+
+  /* Background / surface aliases */
+  --color-bg: var(--color-secondary);
+  --color-fg: var(--color-primary);
+  --color-muted: rgba(43, 43, 43, 0.6);
+  --color-divider: rgba(43, 43, 43, 0.2);
+
+  /* Type scale per DESIGN.md */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+  --text-6xl: 3.75rem;
+  --text-7xl: 4.5rem;
+  --text-8xl: 6rem;
+  --text-9xl: 8rem;
+  --text-display: 12rem;
+
+  /* Radius */
+  --radius-none: 0px;
+  --radius-sm: 0.25rem;
+  --radius-full: 9999px;
+
+  /* Font families (wired via next/font in app/layout.tsx) */
+  --font-sans: var(--font-geist-sans), "Geist", ui-sans-serif, system-ui,
+    sans-serif;
+  --font-mono: var(--font-geist-mono), "Geist Mono", ui-monospace, SFMono-Regular,
+    monospace;
+  --font-serif: var(--font-instrument-serif), "Instrument Serif", Georgia,
+    serif;
+}
+
+/* Root base. Body adopts the secondary off-white and primary text. */
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus rings: 2px with offset transparency, per DESIGN.md accessibility. */
+:where(button, a, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-fg);
+  outline-offset: 2px;
+}
+
+/* Dashed section divider helper. */
+.daybook-dashed-hr {
+  border: 0;
+  border-top: 1px dashed var(--color-divider);
+  width: 100%;
+}
+
+/* 4-line tapered stack divider. */
+.daybook-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.daybook-stack > i {
+  display: block;
+  background: var(--color-fg);
+  width: 100%;
+}
+.daybook-stack > i:nth-child(1) { height: 0.5px; }
+.daybook-stack > i:nth-child(2) { height: 1px; }
+.daybook-stack > i:nth-child(3) { height: 2px; }
+.daybook-stack > i:nth-child(4) { height: 3px; }
+
+/* Brutalist heading utility. */
+.daybook-display {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+/* Primary button per DESIGN.md (black bg / off-white text, subtle hover). */
+.daybook-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-fg);
+  color: var(--color-bg);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  transition: opacity 0.3s ease-out;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+.daybook-btn:hover {
+  opacity: 0.85;
+}
+.daybook-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.daybook-btn-accent {
+  background: var(--color-accent-orange);
+  color: var(--color-bg);
+}
+.daybook-btn-ghost {
+  background: transparent;
+  color: var(--color-fg);
+  border: 1px solid var(--color-fg);
+}
+
+/* Input fields. */
+.daybook-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: 1px solid var(--color-fg);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--color-fg);
+}
+.daybook-input::placeholder {
+  color: var(--color-muted);
+}
+
+/* Mono meta text. */
+.daybook-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--color-muted);
+  text-transform: uppercase;
+}
+
+/* Strikethrough completed plan. */
+.daybook-plan-done {
+  text-decoration: line-through;
+  color: var(--color-muted);
+}
